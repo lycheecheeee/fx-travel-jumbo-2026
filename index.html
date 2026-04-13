@@ -5452,9 +5452,9 @@ function initHeroJumboInteraction() {
    * 播放象寶叫聲
    */
   // 通用音效播放函數
-  function playSound(soundFile, volume = 0.6) {
+  function playSound(soundFile, volume = 1.0) {
     try {
-      const audio = new Audio(`/assets/%23sounds/${soundFile}`);
+      const audio = new Audio(`./assets/sounds/${soundFile}`);
       audio.volume = volume;
       audio.play().catch(error => {
         logger.warn('⚠️ 音效播放失敗:', error);
@@ -5472,17 +5472,35 @@ function initHeroJumboInteraction() {
   // ============================================
   function playHeroSound() {
     try {
+      logger.log('🔊 Playing hero sound...');
       // 如果音頻元素不存在，則創建新的
       if (!heroAudioElement) {
+        logger.log('🎵 Creating new audio element for hero sound');
         heroAudioElement = new Audio('./assets/sounds/hero-sound.mp3');
         heroAudioElement.volume = 1.0; // 設定音量為 100%
+        
+        // Add error handling
+        heroAudioElement.addEventListener('error', (e) => {
+          logger.error('❌ Hero sound load error:', e);
+        });
+        
+        heroAudioElement.addEventListener('canplaythrough', () => {
+          logger.log('✅ Hero sound loaded successfully');
+        });
       }
       
       // 重置並播放
       heroAudioElement.currentTime = 0;
-      heroAudioElement.play().catch(error => {
-        logger.warn('⚠️ 音效播放失敗:', error);
-      });
+      const playPromise = heroAudioElement.play();
+      
+      if (playPromise !== undefined) {
+        playPromise.then(() => {
+          logger.log('✅ Hero sound playing');
+        }).catch(error => {
+          logger.warn('⚠️ 音效播放失敗:', error);
+          logger.warn('💡 Tip: User interaction may be required before audio can play');
+        });
+      }
       
       // ===== 震撼視覺特效 =====
       const mascot = document.getElementById('heroJumboMascot');
@@ -5809,6 +5827,7 @@ function initHeroJumboInteraction() {
   // Functions: cycleJumboMessage(), getJumboMessages()
   // ============================================
   heroJumbo.addEventListener('click', () => {
+    logger.log('🐘 Jumbo clicked! Playing sound...');
     // Play sound first
     playHeroSound();
     
@@ -5922,7 +5941,7 @@ function initHeroJumboInteraction() {
     heroJumbo.style.filter = 'drop-shadow(0 10px 30px rgba(123,47,190,0.4))';
   });
   
-  // Auto-rotate messages every 8 seconds
+  // Auto-rotate messages every 12 seconds (increased from 8s for stability)
   function startAutoRotate() {
     if (autoRotateTimer) clearInterval(autoRotateTimer);
     autoRotateTimer = setInterval(() => {
