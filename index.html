@@ -5105,19 +5105,37 @@ function initJumboSound() {
   // Load and play the cartoon cute jump sound
   function playElephantSound() {
     try {
+      logger.log('🔊 CTA Jumbo: Playing elephant sound...');
       // Create audio element if not exists
       if (!audioElement) {
+        logger.log('🎵 Creating new audio element for bottom sound');
         audioElement = new Audio('./assets/sounds/bottom-sound.wav');
         audioElement.volume = 1.0; // Set volume to 100%
+        
+        // Add error handling
+        audioElement.addEventListener('error', (e) => {
+          logger.error('❌ Bottom sound load error:', e);
+        });
+        
+        audioElement.addEventListener('canplaythrough', () => {
+          logger.log('✅ Bottom sound loaded successfully');
+        });
       }
       
       // Reset and play
       audioElement.currentTime = 0;
-      audioElement.play().catch(e => {
-        logger.warn('⚠️ Audio playback failed:', e);
-      });
+      const playPromise = audioElement.play();
       
-      logger.log('🐘 Jumbo sound playing!');
+      if (playPromise !== undefined) {
+        playPromise.then(() => {
+          logger.log('✅ Bottom sound playing!');
+        }).catch(error => {
+          logger.warn('⚠️ Audio playback failed:', error);
+          logger.warn('💡 Tip: User interaction may be required before audio can play');
+        });
+      } else {
+        logger.log('✅ Bottom sound playing (legacy browser)!');
+      }
       
     } catch (e) {
       logger.log('Audio playback error:', e);
@@ -5235,6 +5253,7 @@ function initJumboSound() {
   
   // Add event listeners
   jumboMascot.addEventListener('click', (e) => {
+    logger.log('🐘 CTA Jumbo clicked!');
     e.preventDefault();
     playElephantSound();
   });
