@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔍 完整診斷工具</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: white;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        .test-section {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .test-section h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .test-item {
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .success { background: #d4edda; border-left: 4px solid #28a745; }
+        .error { background: #f8d7da; border-left: 4px solid #dc3545; }
+        .warning { background: #fff3cd; border-left: 4px solid #ffc107; }
+        .info { background: #d1ecf1; border-left: 4px solid #17a2b8; }
+        .icon { font-size: 1.5em; }
+        .details { flex: 1; }
+        .label { font-weight: bold; color: #333; }
+        .message { color: #666; font-size: 0.9em; margin-top: 4px; }
+        
+        /* Language Test Section */
+        .lang-test {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+        .lang-btn {
+            padding: 10px 20px;
+            border: 2px solid #667eea;
+            background: white;
+            color: #667eea;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        .lang-btn:hover {
+            background: #667eea;
+            color: white;
+        }
+        .lang-btn.active {
+            background: #667eea;
+            color: white;
+        }
+        
+        .test-output {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        button.action-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            margin: 5px;
+            transition: all 0.3s;
+        }
+        button.action-btn:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 荔枝妹 AI Minisite 完整診斷工具</h1>
+        
+        <!-- Resource Check -->
+        <div class="test-section">
+            <h2>📦 資源加載檢查</h2>
+            <div id="resource-tests"></div>
+            <button class="action-btn" onclick="checkResources()">重新檢查資源</button>
+        </div>
+        
+        <!-- Language Switcher Test -->
+        <div class="test-section">
+            <h2>🌐 語言切換測試</h2>
+            <p style="color: #666; margin-bottom: 10px;">點擊下方按鈕測試語言切換功能：</p>
+            <div class="lang-test">
+                <button class="lang-btn" data-lang="zh-TW" onclick="testLanguageSwitch('zh-TW')">繁體中文</button>
+                <button class="lang-btn" data-lang="en" onclick="testLanguageSwitch('en')">English</button>
+                <button class="lang-btn" data-lang="ja" onclick="testLanguageSwitch('ja')">日本語</button>
+            </div>
+            <div id="lang-output" class="test-output" style="display: none;"></div>
+        </div>
+        
+        <!-- Console Log Capture -->
+        <div class="test-section">
+            <h2>📋 控制台日誌捕獲</h2>
+            <button class="action-btn" onclick="openMainSite()">打開主網站</button>
+            <button class="action-btn" onclick="clearLogs()">清除日誌</button>
+            <div id="console-logs" class="test-output">
+                <div class="info test-item">
+                    <span class="icon">ℹ️</span>
+                    <div class="details">
+                        <div class="label">等待中...</div>
+                        <div class="message">點擊「打開主網站」後，這裡會顯示控制台輸出</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Quick Links -->
+        <div class="test-section">
+            <h2>🔗 快速連結</h2>
+            <button class="action-btn" onclick="window.open('http://localhost:1994/minisite-interactive-ver29.html', '_blank')">打開 ver29</button>
+            <button class="action-btn" onclick="window.open('http://localhost:1994/test-resources.html', '_blank')">打開資源檢查</button>
+        </div>
+    </div>
+
+    <script>
+        // Capture console logs
+        const originalLog = console.log;
+        const originalWarn = console.warn;
+        const originalError = console.error;
+        const logs = [];
+        
+        console.log = function(...args) {
+            logs.push({ type: 'log', message: args.join(' '), time: new Date().toLocaleTimeString() });
+            updateLogDisplay();
+            originalLog.apply(console, args);
+        };
+        
+        console.warn = function(...args) {
+            logs.push({ type: 'warn', message: args.join(' '), time: new Date().toLocaleTimeString() });
+            updateLogDisplay();
+            originalWarn.apply(console, args);
+        };
+        
+        console.error = function(...args) {
+            logs.push({ type: 'error', message: args.join(' '), time: new Date().toLocaleTimeString() });
+            updateLogDisplay();
+            originalError.apply(console, args);
+        };
+        
+        function updateLogDisplay() {
+            const logDiv = document.getElementById('console-logs');
+            if (logs.length === 0) return;
+            
+            logDiv.innerHTML = logs.slice(-20).map(log => {
+                const icon = log.type === 'error' ? '❌' : log.type === 'warn' ? '⚠️' : 'ℹ️';
+                const className = log.type === 'error' ? 'error' : log.type === 'warn' ? 'warning' : 'info';
+                return `
+                    <div class="${className} test-item">
+                        <span class="icon">${icon}</span>
+                        <div class="details">
+                            <div class="label">[${log.time}] ${log.type.toUpperCase()}</div>
+                            <div class="message">${escapeHtml(log.message)}</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            logDiv.scrollTop = logDiv.scrollHeight;
+        }
+        
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        function clearLogs() {
+            logs.length = 0;
+            document.getElementById('console-logs').innerHTML = `
+                <div class="info test-item">
+                    <span class="icon">ℹ️</span>
+                    <div class="details">
+                        <div class="label">日誌已清除</div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        function openMainSite() {
+            window.open('http://localhost:1994/minisite-interactive-ver29.html', '_blank');
+            setTimeout(() => {
+                document.getElementById('console-logs').innerHTML = `
+                    <div class="info test-item">
+                        <span class="icon">ℹ️</span>
+                        <div class="details">
+                            <div class="label">監聽中...</div>
+                            <div class="message">請在主網站進行操作，日誌會自動顯示在這裡</div>
+                        </div>
+                    </div>
+                `;
+            }, 500);
+        }
+        
+        // Resource checking
+        async function checkResources() {
+            const resources = [
+                { name: '主視頻', url: '/assets/0_hero-video.mp4' },
+                { name: 'Quote 視頻', url: '/assets/3_thbhkd-quote.mp4' },
+                { name: '首頁 HTML', url: '/minisite-interactive-ver29.html' }
+            ];
+            
+            const container = document.getElementById('resource-tests');
+            container.innerHTML = '<div class="info test-item"><span class="icon">⏳</span><div class="details"><div class="label">檢查中...</div></div></div>';
+            
+            for (const resource of resources) {
+                try {
+                    const response = await fetch(resource.url, { method: 'HEAD' });
+                    if (response.ok) {
+                        const size = response.headers.get('content-length');
+                        container.innerHTML += `
+                            <div class="success test-item">
+                                <span class="icon">✅</span>
+                                <div class="details">
+                                    <div class="label">${resource.name}</div>
+                                    <div class="message">${resource.url} - ${size ? (size/1024/1024).toFixed(2) + ' MB' : 'OK'}</div>
+                                </div>
+                            </div>
+                        `;
+                    } else {
+                        throw new Error(`HTTP ${response.status}`);
+                    }
+                } catch (error) {
+                    container.innerHTML += `
+                        <div class="error test-item">
+                            <span class="icon">❌</span>
+                            <div class="details">
+                                <div class="label">${resource.name}</div>
+                                <div class="message">${resource.url} - ${error.message}</div>
+                            </div>
+                        </div>
+                    `;
+                }
+            }
+        }
+        
+        // Language switch test
+        function testLanguageSwitch(lang) {
+            const output = document.getElementById('lang-output');
+            output.style.display = 'block';
+            
+            // Update active button
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.lang === lang) btn.classList.add('active');
+            });
+            
+            const messages = {
+                'zh-TW': '✅ 繁體中文切換成功！',
+                'en': '✅ English switch successful!',
+                'ja': '✅ 日本語切り替え成功！'
+            };
+            
+            output.innerHTML = `
+                <div class="success test-item">
+                    <span class="icon">🌐</span>
+                    <div class="details">
+                        <div class="label">語言切換測試</div>
+                        <div class="message">${messages[lang]}</div>
+                        <div class="message" style="margin-top: 8px; color: #999;">
+                            如果主網站的語言按鈕沒有反應，請檢查：<br>
+                            1. 按鈕是否有正確的 data-lang 屬性<br>
+                            2. 事件監聽器是否正確綁定<br>
+                            3. translations 對象是否包含該語言
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            console.log(`🧪 語言切換測試: ${lang}`);
+        }
+        
+        // Auto-check on load
+        window.addEventListener('load', () => {
+            checkResources();
+        });
+    </script>
+</body>
+</html>

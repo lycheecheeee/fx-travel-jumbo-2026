@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>資源檢查工具</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .check-item {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .success { border-left: 4px solid #4CAF50; }
+        .error { border-left: 4px solid #f44336; }
+        .warning { border-left: 4px solid #ff9800; }
+        h1 { color: #333; }
+        .status { font-weight: bold; margin-top: 10px; }
+        .success .status { color: #4CAF50; }
+        .error .status { color: #f44336; }
+        .warning .status { color: #ff9800; }
+    </style>
+</head>
+<body>
+    <h1>🔍 資源加載檢查工具</h1>
+    <div id="results"></div>
+
+    <script>
+        const resources = [
+            { name: '主視頻', url: '/assets/0_hero-video.mp4', type: 'video' },
+            { name: 'Quote 視頻', url: '/assets/3_thbhkd-quote.mp4', type: 'video' },
+            { name: '音效文件夾', url: '/sounds/', type: 'dir' }
+        ];
+
+        const resultsDiv = document.getElementById('results');
+
+        async function checkResource(resource) {
+            const div = document.createElement('div');
+            div.className = 'check-item';
+            
+            try {
+                if (resource.type === 'dir') {
+                    // For directory, just check if we can access it
+                    const response = await fetch(resource.url);
+                    if (response.ok || response.status === 403) {
+                        div.classList.add('success');
+                        div.innerHTML = `
+                            <h3>✅ ${resource.name}</h3>
+                            <p>路徑: ${resource.url}</p>
+                            <p class="status">狀態: 可訪問</p>
+                        `;
+                    } else {
+                        throw new Error(`HTTP ${response.status}`);
+                    }
+                } else {
+                    const response = await fetch(resource.url, { method: 'HEAD' });
+                    if (response.ok) {
+                        const size = response.headers.get('content-length');
+                        div.classList.add('success');
+                        div.innerHTML = `
+                            <h3>✅ ${resource.name}</h3>
+                            <p>路徑: ${resource.url}</p>
+                            <p class="status">狀態: 正常 (${size ? (size/1024/1024).toFixed(2) + ' MB' : '大小未知'})</p>
+                        `;
+                    } else {
+                        throw new Error(`HTTP ${response.status}`);
+                    }
+                }
+            } catch (error) {
+                div.classList.add('error');
+                div.innerHTML = `
+                    <h3>❌ ${resource.name}</h3>
+                    <p>路徑: ${resource.url}</p>
+                    <p class="status">狀態: ${error.message}</p>
+                `;
+            }
+            
+            resultsDiv.appendChild(div);
+        }
+
+        // Check all resources
+        resources.forEach(resource => checkResource(resource));
+
+        // Add summary
+        setTimeout(() => {
+            const summary = document.createElement('div');
+            summary.className = 'check-item warning';
+            summary.innerHTML = `
+                <h3>📊 檢查完成</h3>
+                <p>如果看到 ❌ 錯誤，請檢查文件是否存在於正確路徑</p>
+                <p>如果所有項目都是 ✅，則資源加載正常</p>
+            `;
+            resultsDiv.appendChild(summary);
+        }, 2000);
+    </script>
+</body>
+</html>
