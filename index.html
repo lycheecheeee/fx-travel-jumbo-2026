@@ -5504,10 +5504,8 @@ function initHeroJumboInteraction() {
   // ============================================
   function playHeroSound() {
     try {
-      logger.log('🔊 Playing hero sound...');
       // 如果音頻元素不存在，則創建新的
       if (!heroAudioElement) {
-        logger.log('🎵 Creating new audio element for hero sound');
         heroAudioElement = new Audio('./assets/sounds/hero-sound.mp3');
         heroAudioElement.volume = 1.0; // 設定音量為 100%
         
@@ -5515,24 +5513,23 @@ function initHeroJumboInteraction() {
         heroAudioElement.addEventListener('error', (e) => {
           logger.error('❌ Hero sound load error:', e);
         });
-        
-        heroAudioElement.addEventListener('canplaythrough', () => {
-          logger.log('✅ Hero sound loaded successfully');
-        });
       }
       
-      // 重置並播放
-      heroAudioElement.currentTime = 0;
-      const playPromise = heroAudioElement.play();
+      // 重置並播放 - clone the audio to allow overlapping playback
+      const audioClone = heroAudioElement.cloneNode();
+      audioClone.volume = 1.0;
+      const playPromise = audioClone.play();
       
       if (playPromise !== undefined) {
-        playPromise.then(() => {
-          logger.log('✅ Hero sound playing');
-        }).catch(error => {
+        playPromise.catch(error => {
           logger.warn('⚠️ 音效播放失敗:', error);
-          logger.warn('💡 Tip: User interaction may be required before audio can play');
         });
       }
+      
+      // Clean up cloned audio after playback
+      audioClone.addEventListener('ended', () => {
+        audioClone.remove();
+      });
       
       // ===== 震撼視覺特效 =====
       const mascot = document.getElementById('heroJumboMascot');
@@ -5852,6 +5849,7 @@ function initHeroJumboInteraction() {
   const maxRecentHistory = 5; // Keep track of last 5 messages
   let lastPlayTime = 0;
   let autoRotateTimer = null;
+  let isAnimating = false; // Prevent animation conflicts
   
   // ============================================
   // MODULE: Jumbo Mascot Interaction
@@ -5859,12 +5857,20 @@ function initHeroJumboInteraction() {
   // Functions: cycleJumboMessage(), getJumboMessages()
   // ============================================
   heroJumbo.addEventListener('click', () => {
+    // Prevent rapid clicks causing conflicts
+    if (isAnimating) return;
+    isAnimating = true;
+    
     logger.log('🐘 Jumbo clicked! Playing sound...');
+    
     // Play sound first
     playHeroSound();
     
     const messages = getJumboMessages();
-    if (messages.length === 0) return;
+    if (messages.length === 0) {
+      isAnimating = false;
+      return;
+    }
     
     // Enhanced random message selection with history tracking
     let newIndex;
@@ -5906,19 +5912,20 @@ function initHeroJumboInteraction() {
       }
     }
     
-    // Play elephant sound (with cooldown to prevent spam)
-    const now = Date.now();
-    if (now - lastPlayTime > 500) { // 每 0.5 秒最多播放一次
-      lastPlayTime = now;
-      // Sound already played at the beginning of click handler
-    }
-    
     // Bounce animation with more variation
     const rotateAngle = (Math.random() - 0.5) * 10; // Random rotation between -5 and 5 degrees
     const scaleAmount = 1.05 + Math.random() * 0.1; // Random scale between 1.05 and 1.15
+    heroJumbo.style.transition = 'transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
     heroJumbo.style.transform = `scale(${scaleAmount}) rotate(${rotateAngle}deg)`;
+    
     setTimeout(() => {
+      heroJumbo.style.transition = 'transform 0.4s ease-out';
       heroJumbo.style.transform = 'scale(1) rotate(0)';
+      
+      // Reset animation lock after animation completes
+      setTimeout(() => {
+        isAnimating = false;
+      }, 400);
     }, 300);
     
     // Reset auto-rotate timer on manual click
