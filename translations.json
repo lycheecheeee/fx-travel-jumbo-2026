@@ -70,6 +70,7 @@
     "faq.a5": "絕對安全！所有數據都經過加密傳輸同儲存，我哋嚴肅對待私隱問題。你可以隨時喺設定內備份或刪除所有數據。",
     "faq.q6": "象寶有其他語言版本嗎？",
     "faq.a6": "象寶目前只有繁體中文版本！不過簡體中文、英文等多語言版本正在研發當中，大家敬請期待。",
+    "footer.tagline": "旅行記賬分賬 · 即時匯率換算 · 到價提示",
     
     "other.fps.title": "FPS 轉數快結算",
     "other.fps.desc": "一鍵生成個人 FPS 二維碼，或掃描朋友二維碼，即時完成分帳轉賬。旅行後快速結清，安全又便捷。",
@@ -96,7 +97,8 @@
     "other.daily.title": "日常开支管理",
     "other.daily.desc": "不仅限于旅行，日常消费同样适用。个人记账、朋友聚餐 AA 制，一站式管理所有财务记录，让每一笔支出清晰有序。",
     "cta.jumbo.greeting": "出发啦",
-    "cta.jumbo.message": "带我去环游世界吧"
+    "cta.jumbo.message": "带我去环游世界吧",
+    "footer.tagline": "旅行记账分账 · 实时汇率换算 · 到价提示"
   },
   "en": {
     "brand.name": "FX Travel Jumbo",
@@ -116,7 +118,8 @@
     "other.daily.title": "Daily Expense Tracking",
     "other.daily.desc": "Not just for travel—perfect for daily spending too. Manage personal expenses and group splits all in one place, keeping every transaction clear and organized.",
     "cta.jumbo.greeting": "Let's Go!",
-    "cta.jumbo.message": "Take me around the world!"
+    "cta.jumbo.message": "Take me around the world!",
+    "footer.tagline": "Travel Expense Splitting · Real-time Exchange Rates · Rate Alerts"
   },
   "ja": {
     "brand.name": "FX トラベル ジャンボ",
@@ -136,7 +139,8 @@
     "other.daily.title": "日常支出管理",
     "other.daily.desc": "旅行だけでなく、日常の消費にも最適。個人の記帳やグループでの割り勘を一元管理し、すべての取引を明確に整理。",
     "cta.jumbo.greeting": "出発！",
-    "cta.jumbo.message": "世界中を旅しましょう！"
+    "cta.jumbo.message": "世界中を旅しましょう！",
+    "footer.tagline": "旅行経費の分割 · リアルタイム為替換算 · レート通知"
   },
   "ko": {
     "brand.name": "FX 트래블 점보",
@@ -156,6 +160,7 @@
     "other.daily.title": "일상 지출 관리",
     "other.daily.desc": "여행뿐만 아니라 일상 소비에도 최적. 개인 가계부 및 그룹 분할 결제를 한 곳에서 관리하여 모든 거래를 명확하게 정리.",
     "cta.jumbo.greeting": "출발!",
-    "cta.jumbo.message": "전 세계를 여행해요!"
+    "cta.jumbo.message": "전 세계를 여행해요!",
+    "footer.tagline": "여행 경비 분할 · 실시간 환율 계산 · 환율 알림"
   }
 }
