@@ -2634,7 +2634,7 @@ details.animate-fade-in-up:hover {
   <div id="heroMouseGlow" style="position:absolute;width:500px;height:500px;background:radial-gradient(circle, rgba(123,47,190,0.15) 0%, rgba(236,72,153,0.08) 40%, transparent 70%);border-radius:50%;filter:blur(80px);pointer-events:none;z-index:1;transition:all 0.4s ease;opacity:0;"></div>
   
   <!-- Main Video (Actual Size, Centered) - 优化背景消除黑影 -->
-  <video id="heroVideo" loop playsinline muted autoplay preload="metadata" style="position:relative;z-index:2;max-width:min(95vw,1600px);width:auto;height:auto;max-height:85vh;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,0.3),0 0 100px rgba(123,47,190,0.2);animation:videoFadeIn 1.5s ease-out;background:transparent;object-fit:contain;">
+  <video id="heroVideo" loop playsinline muted autoplay preload="auto" style="position:relative;z-index:2;max-width:min(95vw,1600px);width:auto;height:auto;max-height:85vh;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,0.3),0 0 100px rgba(123,47,190,0.2);background:transparent;object-fit:contain;">
     <source src="./assets/Section%201_Hero%20video/0_hero-video.mp4" type="video/mp4">
     <!-- Fallback message if video fails to load -->
     <div style="color:white;text-align:center;padding:40px;">視頻加載中...</div>
