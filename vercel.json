@@ -1,4 +1,5 @@
 {
+  "name": "fxtraveljumbo",
   "buildCommand": "echo 'No build required - static site'",
   "outputDirectory": "dist",
   "devCommand": null,

@@ -532,6 +532,13 @@ nav {
     z-index: 9998 !important; /* Ensure always on top (below toast/shockwave) */
   }
   
+  /* Hide Jumbo mascot on mobile devices */
+  @media (max-width: 768px) {
+    #heroJumboMascot {
+      display: none !important;
+    }
+  }
+  
   #heroJumboMascot img {
     width: clamp(80px, 18vw, 140px) !important;
     filter: drop-shadow(0 15px 40px rgba(123,47,190,0.5)) !important;
@@ -950,6 +957,13 @@ nav {
   /* Jumbo mascot sizing */
   #heroJumboMascot img {
     width: clamp(70px, 12vw, 120px) !important;
+  }
+  
+  /* Hide CTA Jumbo mascot on mobile */
+  @media (max-width: 768px) {
+    #ctaJumboMascot {
+      display: none !important;
+    }
   }
   
   #ctaJumboMascot {

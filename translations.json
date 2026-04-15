@@ -12,12 +12,56 @@
     "lang.en": "English",
     "lang.ja": "日本語",
     "lang.ko": "한국어",
+    
+    "hero.title": "旅行記賬分帳 · 即時匯率換算",
+    "hero.subtitle": "OCR即拍即換算、智能多人分帳、即時匯率追蹤",
+    "hero.description": "一App搞定所有旅行財務",
+    
+    "appIntro.title": "專為旅人設計的財務管理App",
+    "appIntro.desc": "從出發前換錢到回程後結帳，全程陪伴您。",
+    
+    "coreFeatures.subtitle": "核心功能",
+    "coreFeatures.title": "您需要的，象寶都有",
+    "coreFeatures.desc": "專為旅人設計的財務管理App，從出發前換錢到回程後結帳，全程陪伴您。",
+    
+    "feature.ocr.title": "OCR 拍照翻譯",
+    "feature.ocr.desc": "對著收據拍照，立即自動識別金額與貨幣，無需手動輸入。",
+    
+    "feature.split.title": "多人分帳",
+    "feature.split.desc": "建立旅行群組，自動計算每人應付金額，公平又簡單。",
+    
+    "feature.rate.title": "即時匯率",
+    "feature.rate.desc": "支援17種貨幣，實時更新匯率，隨時知道最準確的兌換比例。",
+    
+    "feature.accounting.title": "智能記帳",
+    "feature.accounting.desc": "自動分類支出，生成視覺化報表，清晰掌握旅行預算。",
+    
+    "currencies.subtitle": "全球通行",
+    "currencies.title": "支援 17+ 種貨幣",
+    "currencies.desc": "無論您去哪裡旅行，象寶都能幫助您。",
+    
+    "howToUse.subtitle": "簡單易用",
+    "howToUse.title": "3 步開始使用",
+    "howToUse.desc": "無需複雜設定，立即開始記錄旅行開支。",
+    
+    "step1.title": "下載 App",
+    "step1.desc": "從 App Store 或 Google Play 免費下載",
+    
+    "step2.title": "建立群組",
+    "step2.desc": "邀請旅伴加入，開始共同記帳",
+    
+    "step3.title": "開始記帳",
+    "step3.desc": "拍照或手動輸入，自動分帳計算",
+    
+    "faq.subtitle": "常見問題",
+    "faq.title": "有疑問？我們解答",
+    
     "other.fps.title": "FPS 轉數快結算",
     "other.fps.desc": "一鍵生成個人 FPS 二維碼，或掃描朋友二維碼，即時完成分帳轉賬。旅行後快速結清，安全又便捷。",
     "other.daily.title": "日常開支管理",
     "other.daily.desc": "不僅限於旅行，日常消費同樣適用。個人記帳、朋友聚餐 AA 制，一站式管理所有財務記錄，讓每一筆支出清晰有序。",
-    "cta.jumbo.greeting": "出發喇",
-    "cta.jumbo.message": "帶埋我去環遊世界啦"
+    "cta.jumbo.greeting": "出發了",
+    "cta.jumbo.message": "帶我去環遊世界吧"
   },
   "zh-CN": {
     "brand.name": "外游象宝",
