@@ -520,20 +520,11 @@ nav {
     object-fit: contain !important;
   }
   
-  /* Volume toggle button - adjust position on mobile to avoid overlap */
+  /* Volume toggle button - Mobile optimization (minimal overrides) */
   #heroVolumeToggle {
-    bottom: 20px !important; /* Lower position to avoid overlap with App Icon */
-    left: 15px !important;
-    width: 44px !important;
-    height: 44px !important;
     z-index: 10000 !important; /* Ensure above all content */
-    opacity: 1 !important;
-    pointer-events: auto !important;
     display: flex !important; /* Force visible on mobile */
-    background: linear-gradient(135deg, rgba(123,47,190,0.9), rgba(236,72,153,0.9)) !important; /* Solid gradient background for contrast */
-    backdrop-filter: blur(10px) !important;
-    border: 2px solid rgba(255,255,255,0.5) !important;
-    box-shadow: 0 4px 20px rgba(123,47,190,0.6) !important;
+    /* Keep inline styles for position, size, and appearance */
   }
   
   /* Force SVG icons to be visible */
