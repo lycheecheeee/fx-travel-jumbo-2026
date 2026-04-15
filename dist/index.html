@@ -2374,24 +2374,6 @@ details.animate-fade-in-up:hover {
 </style>
 
 <!-- Dynamic i18n Translation System (No Hardcoded Content) -->
-<script src="js/i18n-dynamic.js"></script>
-
-<!-- Load Translations Dynamically -->
-<script>
-  // Load translations from external JSON file (no hardcoding)
-  document.addEventListener('DOMContentLoaded', async () => {
-    try {
-      await window.i18n.loadTranslations('translations.json', 'zh-TW');
-      await window.i18n.loadTranslations('translations.json', 'zh-CN');
-      await window.i18n.loadTranslations('translations.json', 'en');
-      await window.i18n.loadTranslations('translations.json', 'ja');
-      await window.i18n.loadTranslations('translations.json', 'ko');
-      console.log('[i18n] All translations loaded successfully');
-    } catch (error) {
-      console.warn('[i18n] Using fallback mode (content will use data-i18n keys)');
-    }
-  });
-</script>
 </head>
 <body>
 

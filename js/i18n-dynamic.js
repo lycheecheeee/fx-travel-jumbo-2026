@@ -35,7 +35,7 @@ class I18nManager {
   normalizeLang(lang) {
     const langMap = {
       'zh-TW': 'zh-TW',
-      'zh-HK': 'zh-TW',
+      'zh-HK': 'zh-HK',
       'zh-MO': 'zh-TW',
       'zh-CN': 'zh-CN',
       'zh-SG': 'zh-CN',
@@ -54,7 +54,7 @@ class I18nManager {
    * Validate language code
    */
   isValidLang(lang) {
-    const supportedLangs = ['zh-TW', 'zh-CN', 'en', 'ja', 'ko'];
+    const supportedLangs = ['zh-TW', 'zh-HK', 'zh-CN', 'en', 'ja', 'ko'];
     return supportedLangs.includes(lang);
   }
   
@@ -326,7 +326,7 @@ class I18nManager {
    * Get all supported languages
    */
   getSupportedLangs() {
-    return ['zh-TW', 'zh-CN', 'en', 'ja', 'ko'];
+    return ['zh-TW', 'zh-HK', 'zh-CN', 'en', 'ja', 'ko'];
   }
 }
 
