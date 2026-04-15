@@ -530,6 +530,19 @@ nav {
     opacity: 1 !important;
     pointer-events: auto !important;
     display: flex !important; /* Force visible on mobile */
+    background: linear-gradient(135deg, rgba(123,47,190,0.9), rgba(236,72,153,0.9)) !important; /* Solid gradient background for contrast */
+    backdrop-filter: blur(10px) !important;
+    border: 2px solid rgba(255,255,255,0.5) !important;
+    box-shadow: 0 4px 20px rgba(123,47,190,0.6) !important;
+  }
+  
+  /* Force SVG icons to be visible */
+  #heroVolumeToggle svg {
+    stroke: #ffffff !important; /* Force white stroke for visibility */
+    fill: none !important;
+    stroke-width: 2.5 !important; /* Thicker stroke for better visibility */
+    width: 24px !important;
+    height: 24px !important;
   }
   
   /* Scroll to Top button - Mobile optimization */
@@ -540,6 +553,18 @@ nav {
     height: 44px !important;
     z-index: 10000 !important; /* Ensure above all content */
     box-shadow: 0 4px 20px rgba(123,47,190,0.6) !important;
+    display: flex !important; /* Force flexbox layout */
+    align-items: center !important;
+    justify-content: center !important;
+  }
+  
+  /* Force SVG icons to be visible in scroll-to-top button */
+  #scrollTopBtn svg {
+    stroke: #ffffff !important; /* Force white stroke for visibility */
+    fill: none !important;
+    stroke-width: 2.5 !important; /* Thicker stroke for better visibility */
+    width: 24px !important;
+    height: 24px !important;
   }
   
   /* Show Jumbo mascot on all devices - Fixed to viewport (follows scroll) */
